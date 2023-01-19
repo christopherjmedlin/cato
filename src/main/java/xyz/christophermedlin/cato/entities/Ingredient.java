@@ -1,18 +1,18 @@
 package xyz.christophermedlin.cato.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 @Entity
-public class Ingredients {
+public class Ingredient {
     private @Id @GeneratedValue Long id;
     private String name;
 
-    public Ingredients() {
+    public Ingredient() {
         this.name = name;
     }
-    public Ingredients(String name) {
+    public Ingredient(String name) {
         this.name = name;
     }
 
