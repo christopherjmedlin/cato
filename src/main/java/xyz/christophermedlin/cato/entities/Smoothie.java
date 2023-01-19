@@ -1,13 +1,17 @@
 package xyz.christophermedlin.cato.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class Smoothie {
     private @Id @GeneratedValue Long id;
     private String name;
+
+    @ManyToMany
+    @JoinTable(name = "smoothie_uses")
+    Set<Ingredient> ingredients;
 
     public Long getId() {
         return this.id;

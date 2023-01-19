@@ -1,13 +1,16 @@
 package xyz.christophermedlin.cato.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class Ingredient {
     private @Id @GeneratedValue Long id;
     private String name;
+
+    @ManyToMany(mappedBy = "ingredients")
+    Set<Smoothie> smoothies;
 
     public Ingredient() {
         this.name = name;
