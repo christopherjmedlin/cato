@@ -9,10 +9,6 @@ public class Smoothie {
     private @Id @GeneratedValue Long id;
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "smoothie_uses")
-    Set<Ingredient> ingredients;
-
     public Long getId() {
         return this.id;
     }
