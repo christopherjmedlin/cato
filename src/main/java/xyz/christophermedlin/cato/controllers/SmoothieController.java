@@ -11,7 +11,7 @@ public class SmoothieController {
     @Autowired
     SmoothieRepository repo;
 
-    @GetMapping("/")
+    @GetMapping("/smoothies")
     public String index() {
         return "Hello world";
     }
