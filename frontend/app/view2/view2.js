@@ -10,5 +10,13 @@ angular.module('myApp.view2', ['ngRoute'])
 }])
 
 .controller('View2Ctrl', [function() {
-
+  $scope.smoothie = {
+    name: "Spinach",
+    ingredients: [
+      "Spinach",
+      "Milk",
+      "Apples",
+      "Something"
+    ]
+  }
 }]);
