@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('myApp.view2', ['ngRoute'])
+angular.module('myApp.smoothie', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view2', {
-    templateUrl: 'view2/view2.html',
-    controller: 'View2Ctrl'
+  $routeProvider.when('/smoothie', {
+    templateUrl: 'smoothie/smoothie.html',
+    controller: 'SmoothieCtrl'
   });
 }])
 
-.controller('View2Ctrl', [function() {
+.controller('SmoothieCtrl', function($scope) {
   $scope.smoothie = {
     name: "Spinach",
     ingredients: [
@@ -19,4 +19,4 @@ angular.module('myApp.view2', ['ngRoute'])
       "Something"
     ]
   }
-}]);
+});

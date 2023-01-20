@@ -1,0 +1,10 @@
+<div ng-controller="SmoothieCtrl">
+  <h1>{{ smoothie.name }}</h1>
+  <p>
+    <ul>
+      <li *ngFor="let ingredient of smoothie.ingredients">
+        {{ ingredient }}
+      </li>
+    </ul>
+  </p>
+</div>
