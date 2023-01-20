@@ -9,6 +9,14 @@ public class Smoothie {
     private @Id @GeneratedValue Long id;
     private String name;
 
+    public Smoothie() {
+        this.name = "";
+    }
+
+    public Smoothie(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return this.id;
     }

@@ -13,6 +13,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 import xyz.christophermedlin.cato.entities.Ingredient;
+import xyz.christophermedlin.cato.entities.Smoothie;
 import xyz.christophermedlin.cato.repositories.IngredientRepository;
 import xyz.christophermedlin.cato.repositories.SmoothieRepository;
 
@@ -40,6 +41,8 @@ public class CatoApplication {
 			ingredientRepository.save(i);
 			i = new Ingredient("Apple");
 			ingredientRepository.save(i);
+			Smoothie s = new Smoothie("Spinach");
+			smoothieRepository.save(s);
 		};
 	}
 }
