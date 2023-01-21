@@ -6,7 +6,5 @@ import org.springframework.stereotype.Repository;
 import xyz.christophermedlin.cato.entities.Smoothie;
 
 @Repository
-public interface SmoothieRepository extends JpaRepository<Smoothie, Long> {
-
-}
+public interface SmoothieRepository extends JpaRepository<Smoothie, Long> {}
 

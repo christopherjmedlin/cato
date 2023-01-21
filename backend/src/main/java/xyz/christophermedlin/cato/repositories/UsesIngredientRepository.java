@@ -5,5 +5,4 @@ import org.springframework.stereotype.Repository;
 import xyz.christophermedlin.cato.entities.UsesIngredient;
 
 @Repository
-public interface UsesIngredientRepository extends JpaRepository<UsesIngredient, Long> {
-}
+public interface UsesIngredientRepository extends JpaRepository<UsesIngredient, Long> {}
