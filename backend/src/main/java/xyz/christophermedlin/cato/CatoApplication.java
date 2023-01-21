@@ -14,8 +14,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 import xyz.christophermedlin.cato.entities.Ingredient;
 import xyz.christophermedlin.cato.entities.Smoothie;
+import xyz.christophermedlin.cato.entities.UsesIngredient;
 import xyz.christophermedlin.cato.repositories.IngredientRepository;
 import xyz.christophermedlin.cato.repositories.SmoothieRepository;
+import xyz.christophermedlin.cato.repositories.UsesIngredientRepository;
 
 import java.util.Arrays;
 
@@ -29,6 +31,9 @@ public class CatoApplication {
 	@Autowired
 	SmoothieRepository smoothieRepository;
 
+	@Autowired
+	UsesIngredientRepository usesRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(CatoApplication.class, args);
@@ -37,12 +42,16 @@ public class CatoApplication {
 	@Bean
 	public CommandLineRunner initDB(ApplicationContext ctx) {
 		return args -> {
-			Ingredient i = new Ingredient("Banana");
-			ingredientRepository.save(i);
-			i = new Ingredient("Apple");
-			ingredientRepository.save(i);
 			Smoothie s = new Smoothie("Spinach");
 			smoothieRepository.save(s);
+			Ingredient i = new Ingredient("Banana");
+			ingredientRepository.save(i);
+			UsesIngredient u = new UsesIngredient(s, i);
+			usesRepository.save(u);
+			i = new Ingredient("Apple");
+			ingredientRepository.save(i);
+			u = new UsesIngredient(s, i);
+			usesRepository.save(u);
 		};
 	}
 }

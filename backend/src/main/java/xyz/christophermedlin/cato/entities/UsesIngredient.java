@@ -1,6 +1,7 @@
 package xyz.christophermedlin.cato.entities;
 
 import jakarta.persistence.*;
+import xyz.christophermedlin.cato.repositories.UsesIngredientRepository;
 
 @Entity
 public class UsesIngredient {
@@ -9,11 +10,11 @@ public class UsesIngredient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "smoothie_id")
     private Smoothie smoothie;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
@@ -21,6 +22,8 @@ public class UsesIngredient {
         this.smoothie = smoothie;
         this.ingredient = ingredient;
     }
+
+    public UsesIngredient() {}
 
     public Ingredient getIngredient() {
         return ingredient;

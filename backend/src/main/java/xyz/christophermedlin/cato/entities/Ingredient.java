@@ -9,6 +9,9 @@ public class Ingredient {
     private @Id @GeneratedValue Long id;
     private String name;
 
+    @OneToMany(mappedBy = "ingredient")
+    private Set<UsesIngredient> usages;
+
     public Ingredient() {
         this.name = name;
     }
