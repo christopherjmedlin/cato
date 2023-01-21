@@ -21,7 +21,7 @@ public class SmoothieController {
     SmoothieService service;
 
     @GetMapping("/smoothies")
-    public List<Smoothie> index(@RequestParam("page") Optional<Integer> page) {
+    public List<Smoothie> index(@RequestParam(required = false) Optional<Integer> page) {
         return this.service.findAll(
                 PageRequest.of((int) page.orElseGet(() -> 0), 10)
         );

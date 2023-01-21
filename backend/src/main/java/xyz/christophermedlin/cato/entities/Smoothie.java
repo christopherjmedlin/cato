@@ -3,6 +3,7 @@ package xyz.christophermedlin.cato.entities;
 import jakarta.persistence.*;
 import org.aspectj.apache.bcel.classfile.Module;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,7 @@ public class Smoothie {
 
     public Smoothie(String name) {
         this.name = name;
+        this.ingredients = new HashSet<>();
     }
 
     public Long getId() {

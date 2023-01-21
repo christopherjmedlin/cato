@@ -46,12 +46,12 @@ public class CatoApplication {
 			smoothieRepository.save(s);
 			Ingredient i = new Ingredient("Banana");
 			ingredientRepository.save(i);
-			UsesIngredient u = new UsesIngredient(s, i);
-			usesRepository.save(u);
+			//UsesIngredient u = new UsesIngredient(s, i);
+			//usesRepository.save(u);
 			i = new Ingredient("Apple");
 			ingredientRepository.save(i);
-			u = new UsesIngredient(s, i);
-			usesRepository.save(u);
+			//u = new UsesIngredient(s, i);
+			//usesRepository.save(u);
 		};
 	}
 }
