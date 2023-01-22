@@ -1,5 +1,7 @@
-<input list="ingredient-suggestions"/>
+<input list="ingredient-suggestions"
+       (keyup)="onInputChange()"/>
 <datalist id="ingredient-suggestions">
-  <option *ngFor="let i of ingredientSuggestions" [value]="i.name"></option>
+  <option *ngFor="let i of ingredientSuggestions"
+          [value]="i.name"></option>
 </datalist>
 
