@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import xyz.christophermedlin.cato.entities.Smoothie;
 import xyz.christophermedlin.cato.repositories.SmoothieRepository;
 import xyz.christophermedlin.cato.repositories.UsesIngredientRepository;
+import xyz.christophermedlin.cato.views.IngredientCountView;
 
 @Service
 public class SmoothieServiceImpl implements SmoothieService {
@@ -41,12 +42,7 @@ public class SmoothieServiceImpl implements SmoothieService {
     }
 
     @Override
-    public List<Smoothie> findAll(Pageable page, Set<Long> ingredients) {
-        if (ingredients == null || ingredients.isEmpty()) {
-            return smoothieRepo.findAll(page).toList();
-        } else {
-            
-            return smoothieRepo.findByIngredientIds(page, ingredients);
-        }
+    public List<IngredientCountView> findByIngredientIds(Pageable page, Set<Long> ingredients) {
+        return smoothieRepo.findByIngredientIds(page, ingredients);
     }
 }

@@ -39,16 +39,22 @@ public class CatoApplication {
 		return args -> {
 			Smoothie s = new Smoothie("Banana");
 			smoothieRepository.save(s);
+			Smoothie s2 = new Smoothie("Banana1");
+			smoothieRepository.save(s2);
 			Ingredient i = new Ingredient("Banana");
 			ingredientRepository.save(i);
 			UsesIngredient u = new UsesIngredient(s, i);
 			usesRepository.save(u);
+			u = new UsesIngredient(s2, i);
+			usesRepository.save(u);
 			i = new Ingredient("Apple");
+			ingredientRepository.save(i);
+			u = new UsesIngredient(s2, i);
+			usesRepository.save(u);
+			i = new Ingredient("Spinach");
 			ingredientRepository.save(i);
 			u = new UsesIngredient(s, i);
 			usesRepository.save(u);
-			s = new Smoothie("Banana1");
-			smoothieRepository.save(s);
 			s = new Smoothie("Banana2");
 			smoothieRepository.save(s);
 			s = new Smoothie("Banana1");
@@ -71,7 +77,7 @@ public class CatoApplication {
 			smoothieRepository.save(s);
 			s = new Smoothie("Banana2");
 			smoothieRepository.save(s);
-			
+
 		};
 	}
 }

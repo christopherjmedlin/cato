@@ -37,9 +37,9 @@ public class SmoothieControllerTests {
         ArrayList<Smoothie> pagetwo = new ArrayList<>();
         pagetwo.add(new Smoothie("Apple"));
 
-        when(smoothieService.findAll(PageRequest.of(0, 10), null))
+        when(smoothieService.findAll(PageRequest.of(0, 10)))
                 .thenReturn(pageone);
-        when(smoothieService.findAll(PageRequest.of(1, 10), null))
+        when(smoothieService.findAll(PageRequest.of(1, 10)))
                 .thenReturn(pagetwo);
     }
 

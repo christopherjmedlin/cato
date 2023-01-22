@@ -10,12 +10,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import xyz.christophermedlin.cato.entities.Smoothie;
+import xyz.christophermedlin.cato.views.IngredientCountView;
 
 @Repository
 public interface SmoothieRepository extends JpaRepository<Smoothie, Long> {
-  @Query( "SELECT s from UsesIngredient u JOIN u.smoothie s " + 
-          "WHERE ingredient.id in :ids")
-  List<Smoothie> findByIngredientIds(Pageable page,
-                                     @Param("ids") Set<Long> inventoryIds);
+  @Query( "SELECT s.id AS id, s.name AS name, COUNT(u.ingredient) AS count " + 
+          "FROM UsesIngredient u JOIN u.smoothie s " + 
+          "WHERE ingredient.id in :ids " +
+          "GROUP BY u.smoothie " +
+          "ORDER BY COUNT(u.ingredient) DESC" )
+  List<IngredientCountView> findByIngredientIds(Pageable page,
+                                                @Param("ids") Set<Long> inventoryIds);
 }
 
