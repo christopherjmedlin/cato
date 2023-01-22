@@ -47,6 +47,31 @@ public class CatoApplication {
 			ingredientRepository.save(i);
 			u = new UsesIngredient(s, i);
 			usesRepository.save(u);
+			s = new Smoothie("Banana1");
+			smoothieRepository.save(s);
+			s = new Smoothie("Banana2");
+			smoothieRepository.save(s);
+			s = new Smoothie("Banana1");
+			smoothieRepository.save(s);
+			s = new Smoothie("Banana2");
+			smoothieRepository.save(s);
+			s = new Smoothie("Banana1");
+			smoothieRepository.save(s);
+			s = new Smoothie("Banana2");
+			smoothieRepository.save(s);
+			s = new Smoothie("Banana1");
+			smoothieRepository.save(s);
+			s = new Smoothie("Banana2");
+			smoothieRepository.save(s);
+			s = new Smoothie("Banana1");
+			smoothieRepository.save(s);
+			s = new Smoothie("Banana2");
+			smoothieRepository.save(s);
+			s = new Smoothie("Banana1");
+			smoothieRepository.save(s);
+			s = new Smoothie("Banana2");
+			smoothieRepository.save(s);
+			
 		};
 	}
 }

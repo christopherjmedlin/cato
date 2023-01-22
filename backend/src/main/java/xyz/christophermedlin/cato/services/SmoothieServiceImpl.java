@@ -1,15 +1,17 @@
 package xyz.christophermedlin.cato.services;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import xyz.christophermedlin.cato.entities.Smoothie;
 import xyz.christophermedlin.cato.repositories.SmoothieRepository;
 import xyz.christophermedlin.cato.repositories.UsesIngredientRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SmoothieServiceImpl implements SmoothieService {
@@ -36,5 +38,15 @@ public class SmoothieServiceImpl implements SmoothieService {
     @Override
     public List<Smoothie> findAll(Pageable page) {
         return smoothieRepo.findAll(page).toList();
+    }
+
+    @Override
+    public List<Smoothie> findAll(Pageable page, Set<Long> ingredients) {
+        if (ingredients == null || ingredients.isEmpty()) {
+            return smoothieRepo.findAll(page).toList();
+        } else {
+            
+            return smoothieRepo.findByIngredientIds(page, ingredients);
+        }
     }
 }

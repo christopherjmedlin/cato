@@ -12,6 +12,7 @@ import xyz.christophermedlin.cato.services.SmoothieService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -21,9 +22,11 @@ public class SmoothieController {
     SmoothieService service;
 
     @GetMapping("/smoothies")
-    public List<Smoothie> index(@RequestParam(required = false) Optional<Integer> page) {
+    public List<Smoothie> index(@RequestParam(required = false) Optional<Integer> page,
+                                @RequestParam(required = false) Set<Long> ingredientIds) {
         return this.service.findAll(
-                PageRequest.of((int) page.orElseGet(() -> 0), 10)
+                PageRequest.of((int) page.orElseGet(() -> 0), 10),
+                ingredientIds
         );
     }
 
