@@ -11,7 +11,8 @@ export class SmoothieComponent {
   constructor(private smoothieService: SmoothieService) {}
 
   getSmoothie() : void {
-    this.smoothie = this.smoothieService.getSmoothie(1);
+    this.smoothieService.getSmoothie(0)
+        .subscribe(s => this.smoothie = s);
   }
 
   ngOnInit(): void {

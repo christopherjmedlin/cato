@@ -13,7 +13,7 @@ import xyz.christophermedlin.cato.services.SmoothieService;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 public class SmoothieController {
 

@@ -8,8 +8,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 import xyz.christophermedlin.cato.entities.Ingredient;
 import xyz.christophermedlin.cato.entities.Smoothie;
+import xyz.christophermedlin.cato.entities.UsesIngredient;
 import xyz.christophermedlin.cato.repositories.IngredientRepository;
 import xyz.christophermedlin.cato.repositories.SmoothieRepository;
 import xyz.christophermedlin.cato.repositories.UsesIngredientRepository;
@@ -35,16 +37,16 @@ public class CatoApplication {
 	@Bean
 	public CommandLineRunner initDB(ApplicationContext ctx) {
 		return args -> {
-			Smoothie s = new Smoothie("Spinach");
+			Smoothie s = new Smoothie("Banana");
 			smoothieRepository.save(s);
 			Ingredient i = new Ingredient("Banana");
 			ingredientRepository.save(i);
-			//UsesIngredient u = new UsesIngredient(s, i);
-			//usesRepository.save(u);
+			UsesIngredient u = new UsesIngredient(s, i);
+			usesRepository.save(u);
 			i = new Ingredient("Apple");
 			ingredientRepository.save(i);
-			//u = new UsesIngredient(s, i);
-			//usesRepository.save(u);
+			u = new UsesIngredient(s, i);
+			usesRepository.save(u);
 		};
 	}
 }
