@@ -5,7 +5,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import xyz.christophermedlin.cato.entities.Smoothie;
-import xyz.christophermedlin.cato.entities.UsesIngredient;
 import xyz.christophermedlin.cato.repositories.SmoothieRepository;
 import xyz.christophermedlin.cato.repositories.UsesIngredientRepository;
 

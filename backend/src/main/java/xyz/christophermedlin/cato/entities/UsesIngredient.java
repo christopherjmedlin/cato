@@ -1,7 +1,6 @@
 package xyz.christophermedlin.cato.entities;
 
 import jakarta.persistence.*;
-import xyz.christophermedlin.cato.repositories.UsesIngredientRepository;
 
 @Entity
 public class UsesIngredient {

@@ -2,18 +2,18 @@ package xyz.christophermedlin.cato.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.christophermedlin.cato.entities.Smoothie;
-import xyz.christophermedlin.cato.repositories.SmoothieRepository;
 import xyz.christophermedlin.cato.services.SmoothieService;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 public class SmoothieController {
 

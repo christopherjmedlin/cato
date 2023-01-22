@@ -2,18 +2,17 @@ package xyz.christophermedlin.cato.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.christophermedlin.cato.entities.Ingredient;
-import xyz.christophermedlin.cato.repositories.IngredientRepository;
 import xyz.christophermedlin.cato.services.IngredientService;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 public class IngredientController {
 

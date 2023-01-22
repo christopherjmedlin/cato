@@ -13,8 +13,9 @@ public class Ingredient {
     private Set<UsesIngredient> usages;
 
     public Ingredient() {
-        this.name = name;
+        this.name = "";
     }
+    
     public Ingredient(String name) {
         this.name = name;
     }
