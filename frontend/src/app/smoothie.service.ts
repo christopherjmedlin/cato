@@ -12,6 +12,6 @@ export class SmoothieService {
   ) { }
 
   getSmoothie(id: number): Observable<Smoothie> {
-    return this.http.get<Smoothie>("http://localhost:8080/smoothies/1");
+    return this.http.get<Smoothie>("http://localhost:8080/smoothies/" + id);
   }
 }

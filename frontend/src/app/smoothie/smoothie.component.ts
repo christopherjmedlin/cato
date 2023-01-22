@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Smoothie } from '../smoothie';
 import { SmoothieService } from '../smoothie.service'
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-smoothie',
@@ -8,15 +9,19 @@ import { SmoothieService } from '../smoothie.service'
   styleUrls: ['./smoothie.component.css']
 })
 export class SmoothieComponent {
-  constructor(private smoothieService: SmoothieService) {}
+  constructor(private smoothieService: SmoothieService,
+              private route: ActivatedRoute) {}
 
   getSmoothie() : void {
-    this.smoothieService.getSmoothie(0)
+    this.smoothieService.getSmoothie(this.id)
         .subscribe(s => this.smoothie = s);
   }
 
   ngOnInit(): void {
-    this.getSmoothie();
+    this.route.paramMap.subscribe(paramMap => {
+      this.id = Number(paramMap.get('id'));
+      this.getSmoothie();
+    });
   }
 
   smoothie : Smoothie = {
@@ -24,4 +29,5 @@ export class SmoothieComponent {
     name: "",
     ingredients: []
   }
+  id: number = -1;
 }
