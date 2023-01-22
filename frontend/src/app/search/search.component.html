@@ -1,0 +1,5 @@
+<input list="ingredient-suggestions"/>
+<datalist id="ingredient-suggestions">
+  <option *ngFor="let i of ingredientSuggestions" [value]="i.name"></option>
+</datalist>
+
