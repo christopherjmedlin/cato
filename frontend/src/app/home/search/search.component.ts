@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Ingredient } from '../../ingredient';
 import { IngredientService } from '../../ingredient.service';
 
@@ -10,8 +10,20 @@ import { IngredientService } from '../../ingredient.service';
 export class SearchComponent {
   constructor(private ingredientService: IngredientService) {}
 
-  onInputChange() {
-    this.ingredientService.getIngredientsByName("a")
+  @Output() inputEvent = new EventEmitter<Ingredient>();
+
+  onInputChange(event: KeyboardEvent) {
+    if (event.key == "Enter") {
+      let selected = (event.target as HTMLInputElement).value;
+      for (let i of this.ingredientSuggestions) {
+        if (i.name == selected) {
+          this.inputEvent.emit(i);
+          return;
+        }
+      }
+    }
+
+    this.ingredientService.getIngredientsByName((event.target as HTMLInputElement).value)
         .subscribe((is) => {this.ingredientSuggestions = is})
 
     this.ingredientSuggestions = [{id: 1, name: "Avocado"}]
@@ -21,4 +33,6 @@ export class SearchComponent {
     {id: 1, name: "Banana"},
     {id: 2, name: "Apple"}
   ]
+
+  ingredient: Ingredient = {id : -1, name : ""}
 }

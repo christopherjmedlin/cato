@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Ingredient } from 'src/app/ingredient';
 
 @Component({
@@ -7,7 +7,9 @@ import { Ingredient } from 'src/app/ingredient';
   styleUrls: ['./ingredient-list.component.css']
 })
 export class IngredientListComponent {
-  ingredients: Ingredient[] = [
-    {id: 1, name: "Banana"}
-  ]
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+  }
+
+  @Input() ingredients : Ingredient[] = []
 }

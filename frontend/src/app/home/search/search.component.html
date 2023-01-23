@@ -1,5 +1,6 @@
 <input list="ingredient-suggestions"
-       (keyup)="onInputChange()"/>
+       (keyup)="onInputChange($event)"
+       name="ingredient"/>
 <datalist id="ingredient-suggestions">
   <option *ngFor="let i of ingredientSuggestions"
           [value]="i.name"></option>

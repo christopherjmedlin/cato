@@ -1,2 +1,2 @@
-<app-search></app-search>
-<app-ingredient-list></app-ingredient-list>
+<app-search (inputEvent)="addIngredient($event)"></app-search>
+<app-ingredient-list [ingredients]="ingredients"></app-ingredient-list>
