@@ -15,18 +15,22 @@ export class SearchComponent {
   onInputChange(event: KeyboardEvent) {
     if (event.key == "Enter") {
       let selected = (event.target as HTMLInputElement).value;
-      for (let i of this.ingredientSuggestions) {
-        if (i.name == selected) {
-          this.inputEvent.emit(i);
-          return;
-        }
-      }
+      this.submit(selected);
     }
 
     this.ingredientService.getIngredientsByName((event.target as HTMLInputElement).value)
         .subscribe((is) => {this.ingredientSuggestions = is})
 
     this.ingredientSuggestions = [{id: 1, name: "Avocado"}]
+  }
+
+  submit(val: string) {
+    for (let i of this.ingredientSuggestions) {
+      if (i.name == val) {
+        this.inputEvent.emit(i);
+        return;
+      }
+    }
   }
 
   ingredientSuggestions: Ingredient[] = [

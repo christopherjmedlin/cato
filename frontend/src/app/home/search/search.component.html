@@ -1,8 +1,10 @@
-<input list="ingredient-suggestions"
-       (keyup)="onInputChange($event)"
-       name="ingredient"/>
-<datalist id="ingredient-suggestions">
-  <option *ngFor="let i of ingredientSuggestions"
-          [value]="i.name"></option>
-</datalist>
-
+<div id="search-container">
+  <input #in list="ingredient-suggestions"
+        (keyup)="onInputChange($event)"
+        name="ingredient"/>
+  <button (click)="submit(in.value)">Add</button>
+  <datalist id="ingredient-suggestions">
+    <option *ngFor="let i of ingredientSuggestions"
+            [value]="i.name"></option>
+  </datalist>
+</div>
