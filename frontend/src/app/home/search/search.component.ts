@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Ingredient } from '../ingredient';
-import { IngredientService } from '../ingredient.service';
+import { Ingredient } from '../../ingredient';
+import { IngredientService } from '../../ingredient.service';
 
 @Component({
   selector: 'app-search',
