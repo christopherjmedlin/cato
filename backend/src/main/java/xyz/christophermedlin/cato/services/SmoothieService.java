@@ -14,4 +14,5 @@ public interface SmoothieService {
     List<Smoothie> findAll();
     List<Smoothie> findAll(Pageable page);
     List<IngredientCountView> findByIngredientIds(Pageable page, Set<Long> ingredients);
+    List<IngredientCountView> findAllIngredientCountView(Pageable page);
 }

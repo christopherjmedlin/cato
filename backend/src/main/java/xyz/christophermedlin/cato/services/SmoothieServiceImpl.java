@@ -45,4 +45,9 @@ public class SmoothieServiceImpl implements SmoothieService {
     public List<IngredientCountView> findByIngredientIds(Pageable page, Set<Long> ingredients) {
         return smoothieRepo.findByIngredientIds(page, ingredients);
     }
+
+    @Override
+    public List<IngredientCountView> findAllIngredientCountView(Pageable page) {
+        return smoothieRepo.findAllIngredientCountView(page);
+    }
 }

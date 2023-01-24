@@ -21,5 +21,9 @@ public interface SmoothieRepository extends JpaRepository<Smoothie, Long> {
           "ORDER BY COUNT(u.ingredient) DESC" )
   List<IngredientCountView> findByIngredientIds(Pageable page,
                                                 @Param("ids") Set<Long> inventoryIds);
+
+  @Query( "SELECT s.id AS id, s.name AS name, 0 AS count " +
+          "FROM Smoothie AS s" )
+  List<IngredientCountView> findAllIngredientCountView(Pageable page);
 }
 
