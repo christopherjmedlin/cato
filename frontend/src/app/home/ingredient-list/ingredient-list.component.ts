@@ -15,7 +15,10 @@ export class IngredientListComponent {
   }
 
   onSearchPressed() {
-    this.router.navigate(['list']);
+    this.router.navigate(
+      ['list'],
+      { queryParams: { ingredientIds: this.ingredients.map((i) => i.id)}}
+    );
   }
 
   @Input() ingredients : Ingredient[] = []
