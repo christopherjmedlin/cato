@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Smoothie } from './smoothie'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs'
 
 @Injectable({
@@ -13,5 +13,13 @@ export class SmoothieService {
 
   getSmoothie(id: number): Observable<Smoothie> {
     return this.http.get<Smoothie>("http://localhost:8080/smoothies/" + id);
+  }
+
+  getSmoothiesByIngredientIds(ingredientIds : number[]): Observable<Smoothie[]> {
+    let ids : string = ingredientIds.map(n => n.toString()).join(",");
+    let params = new HttpParams().set("ingredientIds", ids);
+    return this.http.get<Smoothie[]>("http://localhost:8080/smoothies/ingredientSearch",
+      {params: params}
+    )
   }
 }

@@ -1,1 +1,7 @@
-<p>smoothie-list works!</p>
+<ul>
+  <li *ngFor="let smoothie of smoothies">
+    <a [routerLink]="'/smoothie/' + smoothie.id">
+      {{ smoothie.name }}
+    </a>
+  </li>
+</ul>
