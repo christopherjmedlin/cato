@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { IngredientListComponent } from './home/ingredient-list/ingredient-list.component';
 import { SearchComponent } from './home/search/search.component';
 import { SmoothieComponent } from './smoothie/smoothie.component';
+import { SmoothieListComponent } from './smoothie-list/smoothie-list.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SmoothieComponent } from './smoothie/smoothie.component';
     SmoothieComponent,
     IngredientListComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    SmoothieListComponent
   ],
   imports: [
     BrowserModule,
