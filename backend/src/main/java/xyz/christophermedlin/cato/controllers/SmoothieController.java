@@ -9,12 +9,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,24 +41,16 @@ public class SmoothieController {
     @Autowired
     SmoothieModelAssembler modelAssembler;
 
-    @GetMapping("")
-    public CollectionModel<EntityModel<Smoothie>> index(@PageableDefault(size=10) Pageable page) {
-        List<EntityModel<Smoothie>> smoothies = this.service.findAll(page)
-            .stream()
-            .map(EntityModel::of)
-            .collect(Collectors.toList());
+    @Autowired
+    PagedResourcesAssembler<Smoothie> pagedResourcesAssembler;
 
-        for (EntityModel<Smoothie> s : smoothies) {
-            Link selfLink = linkTo(methodOn(SmoothieController.class)
-                .byId(s.getContent().getId()))
-                .withSelfRel();
-            s.add(selfLink);
-        }
+    @GetMapping("")
+    public PagedModel<EntityModel<Smoothie>> index(@PageableDefault(size=10) Pageable page) {
+        Page<Smoothie> smoothies = this.service.findAll(page);
 
         Link link = linkTo(SmoothieController.class)
             .withSelfRel();
-        CollectionModel<EntityModel<Smoothie>> collection = CollectionModel.of(smoothies, link);
-        return collection;
+        return pagedResourcesAssembler.toModel(smoothies, modelAssembler, link);
     }
 
     @GetMapping("/{id}")
