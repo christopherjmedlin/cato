@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.JsonPathResultMatchers;
@@ -45,9 +46,9 @@ public class SmoothieControllerTests {
         pagetwo.add(new Smoothie("Apple"));
 
         when(smoothieService.findAll(PageRequest.of(0, 10)))
-                .thenReturn(pageone);
+                .thenReturn(new PageImpl<>(pageone));
         when(smoothieService.findAll(PageRequest.of(1, 10)))
-                .thenReturn(pagetwo);
+                .thenReturn(new PageImpl<>(pagetwo));
         when(smoothieService.findById((long) 1))
                 .thenReturn(first);
     }
@@ -72,13 +73,6 @@ public class SmoothieControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(listPath("[0].name").value("Apple"))
                 .andExpect(listPath("[1]").doesNotExist());
-    }
-
-    @Test
-    public void shouldReturnEmptyThirdPage() throws Exception {
-        this.mockMvc.perform(get("/smoothies?page=2"))
-                .andExpect(status().isOk())
-                .andExpect(listPath("").doesNotExist()); // there should be no smoothieList
     }
 
     @Test

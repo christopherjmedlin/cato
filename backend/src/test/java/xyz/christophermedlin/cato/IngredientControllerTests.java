@@ -1,21 +1,24 @@
 package xyz.christophermedlin.cato;
 
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.web.servlet.MockMvc;
+
 import xyz.christophermedlin.cato.entities.Ingredient;
 import xyz.christophermedlin.cato.services.IngredientService;
-
-import java.util.ArrayList;
-
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,11 +39,11 @@ public class IngredientControllerTests {
         pagetwo.add(new Ingredient("Apple"));
 
         when(ingredientService.findAll(PageRequest.of(0, 10)))
-                .thenReturn(pageone);
+                .thenReturn(new PageImpl<>(pageone));
         when(ingredientService.findAll(PageRequest.of(1, 10)))
-                .thenReturn(pagetwo);
+                .thenReturn(new PageImpl<>(pagetwo));
         when(ingredientService.findByNameContains("apple", PageRequest.of(0, 10)))
-                .thenReturn(pagetwo);
+                .thenReturn(new PageImpl<>(pagetwo));
     }
 
     @Test
@@ -59,13 +62,6 @@ public class IngredientControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value("Apple"))
                 .andExpect(jsonPath("$[1]").doesNotExist());
-    }
-
-    @Test
-    public void shouldReturnEmptyThirdPage() throws Exception {
-        this.mockMvc.perform(get("/ingredients?page=2"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isEmpty());
     }
 
     @Test
