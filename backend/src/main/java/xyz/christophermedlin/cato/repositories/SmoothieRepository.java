@@ -1,8 +1,8 @@
 package xyz.christophermedlin.cato.repositories;
 
-import java.util.List;
 import java.util.Set;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,11 +19,11 @@ public interface SmoothieRepository extends JpaRepository<Smoothie, Long> {
           "WHERE ingredient.id in :ids " +
           "GROUP BY u.smoothie " +
           "ORDER BY COUNT(u.ingredient) DESC" )
-  List<IngredientCountView> findByIngredientIds(Pageable page,
+  Page<IngredientCountView> findByIngredientIds(Pageable page,
                                                 @Param("ids") Set<Long> inventoryIds);
 
   @Query( "SELECT s.id AS id, s.name AS name, 0 AS count " +
           "FROM Smoothie AS s" )
-  List<IngredientCountView> findAllIngredientCountView(Pageable page);
+  Page<IngredientCountView> findAllIngredientCountView(Pageable page);
 }
 

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import xyz.christophermedlin.cato.assemblers.IngredientCountViewModelAssembler;
 import xyz.christophermedlin.cato.assemblers.SmoothieModelAssembler;
 import xyz.christophermedlin.cato.entities.Smoothie;
 import xyz.christophermedlin.cato.services.SmoothieService;
@@ -44,6 +45,12 @@ public class SmoothieController {
     @Autowired
     PagedResourcesAssembler<Smoothie> pagedResourcesAssembler;
 
+    @Autowired
+    IngredientCountViewModelAssembler icvModelAssembler;
+
+    @Autowired
+    PagedResourcesAssembler<IngredientCountView> icvPagedResourcesAssembler;
+
     @GetMapping("")
     public PagedModel<EntityModel<Smoothie>> index(@PageableDefault(size=10) Pageable page) {
         Page<Smoothie> smoothies = this.service.findAll(page);
@@ -59,16 +66,18 @@ public class SmoothieController {
     }
 
     @GetMapping("/ingredientSearch")
-    public List<IngredientCountView> reverseIngredientSearch(@RequestParam(required = false) Optional<Integer> page,
-                                                  @RequestParam Set<Long> ingredientIds) {
+    public PagedModel<EntityModel<IngredientCountView>> reverseIngredientSearch(@PageableDefault(size=10) Pageable page,
+                                                                                 @RequestParam Set<Long> ingredientIds) {
+        Page<IngredientCountView> views;
         if (ingredientIds.size() == 0) { 
-            return service.findAllIngredientCountView(
-                PageRequest.of((int) page.orElseGet(() -> 0), 10)
-            );
+            views = service.findAllIngredientCountView(page);
+        } else {
+            views = this.service.findByIngredientIds(
+                page,
+                ingredientIds
+            );    
         }
-        return this.service.findByIngredientIds(
-            PageRequest.of((int) page.orElseGet(() -> 0), 10), 
-            ingredientIds
-        );                                                
+
+        return icvPagedResourcesAssembler.toModel(views, icvModelAssembler);
     }
 }

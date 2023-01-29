@@ -43,12 +43,12 @@ public class SmoothieServiceImpl implements SmoothieService {
     }
 
     @Override
-    public List<IngredientCountView> findByIngredientIds(Pageable page, Set<Long> ingredients) {
+    public Page<IngredientCountView> findByIngredientIds(Pageable page, Set<Long> ingredients) {
         return smoothieRepo.findByIngredientIds(page, ingredients);
     }
 
     @Override
-    public List<IngredientCountView> findAllIngredientCountView(Pageable page) {
+    public Page<IngredientCountView> findAllIngredientCountView(Pageable page) {
         return smoothieRepo.findAllIngredientCountView(page);
     }
 }
