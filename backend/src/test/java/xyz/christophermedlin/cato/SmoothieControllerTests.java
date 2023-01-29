@@ -1,9 +1,11 @@
 package xyz.christophermedlin.cato;
 
+import static org.mockito.ArgumentMatchers.endsWith;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 import java.util.ArrayList;
 
@@ -31,7 +33,9 @@ public class SmoothieControllerTests {
     @BeforeEach
     public void init() {
         ArrayList<Smoothie> pageone = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        Smoothie first = new Smoothie("0");
+        pageone.add(first);
+        for (int i = 1; i < 10; i++) {
             pageone.add(new Smoothie(Integer.toString(i)));
         }
         ArrayList<Smoothie> pagetwo = new ArrayList<>();
@@ -41,6 +45,8 @@ public class SmoothieControllerTests {
                 .thenReturn(pageone);
         when(smoothieService.findAll(PageRequest.of(1, 10)))
                 .thenReturn(pagetwo);
+        when(smoothieService.findById((long) 1))
+                .thenReturn(first);
     }
 
     @Test
@@ -66,5 +72,15 @@ public class SmoothieControllerTests {
         this.mockMvc.perform(get("/smoothies?page=2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isEmpty());
+    }
+
+    @Test
+    public void shouldHaveSelfRef() throws Exception {
+        this.mockMvc.perform(get("/smoothies/1"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$._links.self").exists())
+            .andExpect(jsonPath("$._links.self.href").value(
+                "http://localhost/smoothies/1"
+            ));
     }
 }
