@@ -92,4 +92,10 @@ public class SmoothieControllerTests {
             .andExpect(jsonPath("$._links.self").exists())
             .andExpect(listPath("[0]._links.self").exists());
     }
+
+    @Test
+    public void hasIngredientSearchLink() throws Exception {
+        this.mockMvc.perform(get("/smoothies"))
+            .andExpect(jsonPath("$._links.ingredientSearch").exists());
+    }
 }

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.persistence.Entity;
 import xyz.christophermedlin.cato.assemblers.IngredientCountViewModelAssembler;
 import xyz.christophermedlin.cato.assemblers.SmoothieModelAssembler;
 import xyz.christophermedlin.cato.entities.Smoothie;
@@ -57,7 +58,15 @@ public class SmoothieController {
 
         Link link = linkTo(SmoothieController.class)
             .withSelfRel();
-        return pagedResourcesAssembler.toModel(smoothies, modelAssembler, link);
+        Link ingredientSearchLink = linkTo(methodOn(SmoothieController.class)
+            .reverseIngredientSearch(
+                PageRequest.of(0, 10),
+                Set.of()
+            ))
+            .withRel("ingredientSearch");
+        PagedModel<EntityModel<Smoothie>> model = pagedResourcesAssembler.toModel(smoothies, modelAssembler, link);
+        model.add(ingredientSearchLink);
+        return model;
     }
 
     @GetMapping("/{id}")
