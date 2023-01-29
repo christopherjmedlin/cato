@@ -1,6 +1,7 @@
 package xyz.christophermedlin.cato.controllers;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -32,10 +35,11 @@ public class SmoothieController {
     SmoothieService service;
 
     @GetMapping("")
-    public CollectionModel<EntityModel<Smoothie>> index(@RequestParam(required = false) Optional<Integer> page) {
-        List<EntityModel<Smoothie>> smoothies = this.service.findAll(
-                PageRequest.of((int) page.orElseGet(() -> 0), 10)
-        ).stream().map(EntityModel::of).collect(Collectors.toList());
+    public CollectionModel<EntityModel<Smoothie>> index(@PageableDefault(size=10) Pageable page) {
+        List<EntityModel<Smoothie>> smoothies = this.service.findAll(page)
+            .stream()
+            .map(EntityModel::of)
+            .collect(Collectors.toList());
 
         for (EntityModel<Smoothie> s : smoothies) {
             Link selfLink = linkTo(methodOn(SmoothieController.class)
