@@ -44,7 +44,7 @@ public class SmoothieControllerTests {
         }
         ArrayList<Smoothie> pagetwo = new ArrayList<>();
         pagetwo.add(new Smoothie("Apple"));
-
+        
         when(smoothieService.findAll(PageRequest.of(0, 10)))
                 .thenReturn(new PageImpl<>(pageone));
         when(smoothieService.findAll(PageRequest.of(1, 10)))
@@ -81,7 +81,7 @@ public class SmoothieControllerTests {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$._links.self").exists())
             .andExpect(jsonPath("$._links.self.href").value(
-                "http://localhost/smoothies/1"
+                "http://localhost/smoothies/{id}"
             ));
     }
 

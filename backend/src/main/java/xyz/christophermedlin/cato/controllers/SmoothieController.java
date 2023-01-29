@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import xyz.christophermedlin.cato.assemblers.SmoothieModelAssembler;
 import xyz.christophermedlin.cato.entities.Smoothie;
 import xyz.christophermedlin.cato.services.SmoothieService;
 import xyz.christophermedlin.cato.views.IngredientCountView;
@@ -33,6 +34,9 @@ public class SmoothieController {
 
     @Autowired
     SmoothieService service;
+
+    @Autowired
+    SmoothieModelAssembler modelAssembler;
 
     @GetMapping("")
     public CollectionModel<EntityModel<Smoothie>> index(@PageableDefault(size=10) Pageable page) {
@@ -56,8 +60,7 @@ public class SmoothieController {
 
     @GetMapping("/{id}")
     public EntityModel<Smoothie> byId(@PathVariable(value="id") Long id) {
-        Link self = linkTo(SmoothieController.class).slash(id).withSelfRel();
-        return EntityModel.of(service.findById(id), self);
+        return modelAssembler.toModel(service.findById(id));
     }
 
     @GetMapping("/ingredientSearch")
