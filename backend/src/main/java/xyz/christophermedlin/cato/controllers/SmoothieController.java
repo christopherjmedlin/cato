@@ -76,9 +76,9 @@ public class SmoothieController {
 
     @GetMapping("/ingredientSearch")
     public PagedModel<EntityModel<IngredientCountView>> reverseIngredientSearch(@PageableDefault(size=10) Pageable page,
-                                                                                 @RequestParam Set<Long> ingredientIds) {
+                                                                                 @RequestParam(required=false) Set<Long> ingredientIds) {
         Page<IngredientCountView> views;
-        if (ingredientIds.size() == 0) { 
+        if (ingredientIds == null || ingredientIds.size() == 0) { 
             views = service.findAllIngredientCountView(page);
         } else {
             views = this.service.findByIngredientIds(
