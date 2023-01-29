@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.JsonPathResultMatchers;
 
 import xyz.christophermedlin.cato.entities.Smoothie;
 import xyz.christophermedlin.cato.services.SmoothieService;
@@ -24,6 +25,8 @@ import xyz.christophermedlin.cato.services.SmoothieService;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class SmoothieControllerTests {
+    private static final String LIST_PATH = "$._embedded.smoothieList";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -49,29 +52,33 @@ public class SmoothieControllerTests {
                 .thenReturn(first);
     }
 
+    private JsonPathResultMatchers listPath(String path) {
+        return jsonPath(SmoothieControllerTests.LIST_PATH + path);
+    }
+
     @Test
     public void shouldReturnFirstPageWhenNoParams() throws Exception {
         this.mockMvc.perform(get("/smoothies"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].name").value("0"))
-                .andExpect(jsonPath("$[9].name").value("9"))
-                .andExpect(jsonPath("$[10]").doesNotExist());
+                .andExpect(listPath("").isArray())
+                .andExpect(listPath("[0].name").value("0"))
+                .andExpect(listPath("[9].name").value("9"))
+                .andExpect(listPath("[10]").doesNotExist());
     }
 
     @Test
     public void shouldReturnSecondPage() throws Exception {
         this.mockMvc.perform(get("/smoothies?page=1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("Apple"))
-                .andExpect(jsonPath("$[1]").doesNotExist());
+                .andExpect(listPath("[0].name").value("Apple"))
+                .andExpect(listPath("[1]").doesNotExist());
     }
 
     @Test
     public void shouldReturnEmptyThirdPage() throws Exception {
         this.mockMvc.perform(get("/smoothies?page=2"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isEmpty());
+                .andExpect(listPath("").doesNotExist()); // there should be no smoothieList
     }
 
     @Test
@@ -82,5 +89,13 @@ public class SmoothieControllerTests {
             .andExpect(jsonPath("$._links.self.href").value(
                 "http://localhost/smoothies/1"
             ));
+    }
+
+    @Test
+    public void listShouldHaveSelfRefs() throws Exception {
+        this.mockMvc.perform(get("/smoothies"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$._links.self").exists())
+            .andExpect(listPath("[0]._links.self").exists());
     }
 }

@@ -1,13 +1,15 @@
 package xyz.christophermedlin.cato.controllers;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,10 +32,22 @@ public class SmoothieController {
     SmoothieService service;
 
     @GetMapping("")
-    public List<Smoothie> index(@RequestParam(required = false) Optional<Integer> page) {
-        return this.service.findAll(
+    public CollectionModel<EntityModel<Smoothie>> index(@RequestParam(required = false) Optional<Integer> page) {
+        List<EntityModel<Smoothie>> smoothies = this.service.findAll(
                 PageRequest.of((int) page.orElseGet(() -> 0), 10)
-        );
+        ).stream().map(EntityModel::of).collect(Collectors.toList());
+
+        for (EntityModel<Smoothie> s : smoothies) {
+            Link selfLink = linkTo(methodOn(SmoothieController.class)
+                .byId(s.getContent().getId()))
+                .withSelfRel();
+            s.add(selfLink);
+        }
+
+        Link link = linkTo(SmoothieController.class)
+            .withSelfRel();
+        CollectionModel<EntityModel<Smoothie>> collection = CollectionModel.of(smoothies, link);
+        return collection;
     }
 
     @GetMapping("/{id}")
