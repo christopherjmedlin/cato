@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { Smoothie } from '../smoothie';
 import { SmoothieService } from '../smoothie.service';
 
@@ -15,10 +15,9 @@ export class SmoothieListComponent {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        this.smoothieService.getSmoothiesByIngredientIds(
-          params["ingredientIds"]
-        )
-        .subscribe(s => {
+        let paramMap = convertToParamMap(params);
+        let ids = convertToParamMap(params).getAll("ingredientIds").map(Number);
+        this.smoothieService.getSmoothiesByIngredientIds(ids).subscribe(s => {
           this.smoothies = s;
         })
       });
