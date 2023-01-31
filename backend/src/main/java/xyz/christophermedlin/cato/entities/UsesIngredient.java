@@ -17,9 +17,20 @@ public class UsesIngredient {
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
-    public UsesIngredient(Smoothie smoothie, Ingredient ingredient) {
+    @Enumerated(EnumType.ORDINAL)
+    private MeasurementUnit unit;
+
+    @Column(precision=8)
+    private float unitValue;
+
+    public UsesIngredient(Smoothie smoothie,
+                          Ingredient ingredient,
+                          MeasurementUnit unit,
+                          float unitValue) {
         this.smoothie = smoothie;
         this.ingredient = ingredient;
+        this.unit = unit;
+        this.unitValue = unitValue;
     }
 
     public UsesIngredient() {}
@@ -30,5 +41,13 @@ public class UsesIngredient {
 
     public Smoothie getSmoothie() {
         return smoothie;
+    }
+
+    public MeasurementUnit getUnit() {
+        return this.unit;
+    }
+    
+    public float getUnitValue() {
+        return this.unitValue;
     }
 }
