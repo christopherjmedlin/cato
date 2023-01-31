@@ -1,5 +1,7 @@
 package xyz.christophermedlin.cato.entities;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum MeasurementUnit {
   MILILITER("mL"),
   LITER("L"),
@@ -21,6 +23,8 @@ public enum MeasurementUnit {
     this.str = str;
   }
 
+  @Override
+  @JsonValue
   public String toString() {
     return this.str;
   }
